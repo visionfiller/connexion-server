@@ -1,0 +1,44 @@
+[
+    {
+        "model": "connexionapi.orientation",
+        "pk": 1,
+        "fields": {
+            "label": "Straight"
+        }
+    },
+    {
+        "model": "connexionapi.orientation",
+        "pk": 2,
+        "fields": {
+            "label": "Gay"
+        }
+    },
+    {
+        "model": "connexionapi.orientation",
+        "pk": 3,
+        "fields": {
+            "label": "Lesbian"
+        }
+    },
+    {
+        "model": "connexionapi.orientation",
+        "pk": 4,
+        "fields": {
+            "label": "Ace"
+        }
+    },
+    {
+        "model": "connexionapi.orientation",
+        "pk":5,
+        "fields": {
+            "label": "Pan"
+        }
+    },
+    {
+        "model": "connexionapi.orientation",
+        "pk":6,
+        "fields": {
+            "label": "Bi"
+        }
+    }
+]
