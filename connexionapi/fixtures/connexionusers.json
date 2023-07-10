@@ -1,0 +1,11 @@
+[
+    {
+        "model": "connexionapi.connexionuser",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "bio": "I am Vision",
+            "profile_picture": "https://th.bing.com/th/id/OIP.GeAA0FO3BwC_e47_zDJbsgHaEo?pid=ImgDet&rs=1"
+        }
+    }
+]

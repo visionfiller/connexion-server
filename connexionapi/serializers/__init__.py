@@ -1,0 +1,3 @@
+from .connexion_user_serializer import ConnexionUserSerializer
+from .gender_serializer import GenderSerializer
+from .orientation_serializer import OrientationSerializer
