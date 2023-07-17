@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework import serializers, status
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from connexionapi.models import ConnexionUser
+from connexionapi.models import ConnexionUser, Gender, Orientation
 from connexionapi.serializers import ConnexionUserSerializer
 
 
@@ -47,6 +47,22 @@ class ConnexionUserView(ViewSet):
         """Get the current user's properties"""
         try:
             connexion_user = ConnexionUser.objects.get(user=request.auth.user)
+            serializer = ConnexionUserSerializer(connexion_user)
+            return Response(serializer.data)
+        except ConnexionUser.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
+    @action(methods=['PUT'], detail=False)
+    def update_profile(self, request):
+        """Get the current user's properties"""
+        try:
+            connexion_user = ConnexionUser.objects.get(user=request.auth.user)
+            connexion_user.bio = request.data['bio']
+            gender= Gender.objects.get(pk=request.data['gender'])
+            connexion_user.gender = gender
+            orientation= Orientation.objects.get(pk=request.data['orientation'])
+            connexion_user.orientation = orientation
+            connexion_user.save()
             serializer = ConnexionUserSerializer(connexion_user)
             return Response(serializer.data)
         except ConnexionUser.DoesNotExist as ex:
