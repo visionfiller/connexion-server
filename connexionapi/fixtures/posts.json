@@ -1,0 +1,38 @@
+[
+    {
+        "model": "connexionapi.post",
+        "pk": 1,
+        "fields": {
+            "body": "This is a test",
+            "image": "https://th.bing.com/th/id/R.6c6b24cc13711c81b8195195207f1143?rik=hjdqSBYcOWjO6A&riu=http%3a%2f%2fpulpbits.net%2fwp-content%2fuploads%2f2014%2f01%2fTabby-Cat-Images.jpg&ehk=%2fZ888cHTxBhWmeBDM7txDTST1TTI3Tf6lSCHOQO9tDg%3d&risl=&pid=ImgRaw&r=0",
+            "connexion_user": 1
+        }
+    },
+    {
+        "model": "connexionapi.post",
+        "pk": 2,
+        "fields": {
+            "body": "This is another test",
+            "image": "https://th.bing.com/th/id/R.6c6b24cc13711c81b8195195207f1143?rik=hjdqSBYcOWjO6A&riu=http%3a%2f%2fpulpbits.net%2fwp-content%2fuploads%2f2014%2f01%2fTabby-Cat-Images.jpg&ehk=%2fZ888cHTxBhWmeBDM7txDTST1TTI3Tf6lSCHOQO9tDg%3d&risl=&pid=ImgRaw&r=0",
+            "connexion_user": 2
+        }
+    },
+    {
+        "model": "connexionapi.post",
+        "pk": 3,
+        "fields": {
+            "body": "I love cats",
+            "image": "https://th.bing.com/th/id/R.6c6b24cc13711c81b8195195207f1143?rik=hjdqSBYcOWjO6A&riu=http%3a%2f%2fpulpbits.net%2fwp-content%2fuploads%2f2014%2f01%2fTabby-Cat-Images.jpg&ehk=%2fZ888cHTxBhWmeBDM7txDTST1TTI3Tf6lSCHOQO9tDg%3d&risl=&pid=ImgRaw&r=0",
+            "connexion_user": 1
+        }
+    },
+    {
+        "model": "connexionapi.post",
+        "pk": 4,
+        "fields": {
+            "body": "Love Sunny",
+            "image": "https://th.bing.com/th/id/R.6c6b24cc13711c81b8195195207f1143?rik=hjdqSBYcOWjO6A&riu=http%3a%2f%2fpulpbits.net%2fwp-content%2fuploads%2f2014%2f01%2fTabby-Cat-Images.jpg&ehk=%2fZ888cHTxBhWmeBDM7txDTST1TTI3Tf6lSCHOQO9tDg%3d&risl=&pid=ImgRaw&r=0",
+            "connexion_user": 2
+        }
+    }
+]

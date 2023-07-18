@@ -17,13 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import include
 from django.urls import path
-from connexionapi.views import register_user, login_user, ConnexionUserView, GenderView, OrientationView
+from connexionapi.views import register_user, login_user, ConnexionUserView, GenderView, OrientationView, PostView
 from rest_framework import routers
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'connexionusers',ConnexionUserView, 'connexionuser')
 router.register(r'orientations',OrientationView, 'orientation')
 router.register(r'genders',GenderView, 'gender')
+router.register(r'posts',PostView, 'post')
+
 
 
 urlpatterns = [
