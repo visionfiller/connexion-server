@@ -58,6 +58,7 @@ class ConnexionUserView(ViewSet):
         try:
             connexion_user = ConnexionUser.objects.get(user=request.auth.user)
             connexion_user.bio = request.data['bio']
+            connexion_user.profile_picture = request.data['profile_picture']
             gender= Gender.objects.get(pk=request.data['gender'])
             connexion_user.gender = gender
             orientation= Orientation.objects.get(pk=request.data['orientation'])
