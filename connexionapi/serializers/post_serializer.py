@@ -8,5 +8,5 @@ class PostSerializer(serializers.ModelSerializer):
     connexion_user = ConnexionUserSerializer()
     class Meta:
         model = Post
-        fields = ('id', 'body', 'image', 'connexion_user')
+        fields = ('id', 'body', 'image', 'connexion_user', 'formatted_date')
         
