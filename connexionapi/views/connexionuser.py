@@ -27,7 +27,7 @@ class ConnexionUserView(ViewSet):
             Response -- JSON serialized property
         """
         try:
-            connexion_user = ConnexionUser.objects.get(pk=pk)
+            connexion_user = ConnexionUser.objects.get(user=pk)
             serializer = ConnexionUserSerializer(connexion_user)
             return Response(serializer.data)
         except ConnexionUser.DoesNotExist as ex:
@@ -41,17 +41,8 @@ class ConnexionUserView(ViewSet):
         """
         connexion_users = ConnexionUser.objects.all()
         connexion_user = ConnexionUser.objects.get(user=request.auth.user)
-        friends = FriendRequest.objects.filter(
-            Q(connexion_user_to=connexion_user) | Q(
-                connexion_user_from=connexion_user),
-            status="Approved")
-        friends_list = [friend.connexion_user_to if friend.connexion_user_to !=
-                        connexion_user else friend.connexion_user_from for friend in friends]
-        if connexion_user not in friends_list:
-            friends_list.append(connexion_user)
-        for user in connexion_users:
-            user.friends.set(friends_list)
         serializer = ConnexionUserSerializer(connexion_users, many=True)
+
         return Response(serializer.data)
 
     @action(methods=['GET'], detail=False)
@@ -88,7 +79,7 @@ class ConnexionUserView(ViewSet):
         try:
             connexion_user_from = ConnexionUser.objects.get(
                 user=request.auth.user)
-            connexion_user_to = ConnexionUser.objects.get(pk=pk)
+            connexion_user_to = ConnexionUser.objects.get(user=pk)
             friend_request = FriendRequest.objects.create(
                 connexion_user_from=connexion_user_from, connexion_user_to=connexion_user_to)
             friend_request.status = "Sent"
