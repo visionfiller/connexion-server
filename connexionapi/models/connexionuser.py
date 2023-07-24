@@ -9,6 +9,7 @@ class ConnexionUser(models.Model):
     profile_picture = models.CharField(max_length=250)
     orientation = models.ForeignKey("Orientation",on_delete=models.CASCADE, null=True)
     gender = models.ForeignKey("Gender",on_delete=models.CASCADE, null=True)
+    friends = models.ManyToManyField("ConnexionUser", through="FriendRequest", related_name="approvedfriends")
     @property
     def full_name(self):
         return f'{self.user.first_name} {self.user.last_name}'
