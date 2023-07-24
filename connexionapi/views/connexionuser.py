@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework import serializers, status
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from django.db.models import Q
 from connexionapi.models import ConnexionUser, Gender, Orientation, FriendRequest
 from connexionapi.serializers import ConnexionUserSerializer, FriendRequestSerializer
 
@@ -40,9 +41,16 @@ class ConnexionUserView(ViewSet):
         """
         connexion_users = ConnexionUser.objects.all()
         connexion_user = ConnexionUser.objects.get(user=request.auth.user)
-        user_friends = FriendRequest.objects.filter(connexion_user_to=connexion_user, connexion_user_from= connexion_user,status="Approved")
+        friends = FriendRequest.objects.filter(
+            Q(connexion_user_to=connexion_user) | Q(
+                connexion_user_from=connexion_user),
+            status="Approved")
+        friends_list = [friend.connexion_user_to if friend.connexion_user_to !=
+                        connexion_user else friend.connexion_user_from for friend in friends]
+        if connexion_user not in friends_list:
+            friends_list.append(connexion_user)
         for user in connexion_users:
-            user.friends = user_friends
+            user.friends.set(friends_list)
         serializer = ConnexionUserSerializer(connexion_users, many=True)
         return Response(serializer.data)
 
@@ -63,22 +71,26 @@ class ConnexionUserView(ViewSet):
             connexion_user = ConnexionUser.objects.get(user=request.auth.user)
             connexion_user.bio = request.data['bio']
             connexion_user.profile_picture = request.data['profile_picture']
-            gender= Gender.objects.get(pk=request.data['gender'])
+            gender = Gender.objects.get(pk=request.data['gender'])
             connexion_user.gender = gender
-            orientation= Orientation.objects.get(pk=request.data['orientation'])
+            orientation = Orientation.objects.get(
+                pk=request.data['orientation'])
             connexion_user.orientation = orientation
             connexion_user.save()
             serializer = ConnexionUserSerializer(connexion_user)
             return Response(serializer.data)
         except ConnexionUser.DoesNotExist as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
     @action(methods=['POST'], detail=True)
     def send_friend_request(self, request, pk):
         """sends a request to the user to be added as a friend"""
         try:
-            connexion_user_from = ConnexionUser.objects.get(user=request.auth.user)
+            connexion_user_from = ConnexionUser.objects.get(
+                user=request.auth.user)
             connexion_user_to = ConnexionUser.objects.get(pk=pk)
-            friend_request = FriendRequest.objects.create(connexion_user_from=connexion_user_from, connexion_user_to=connexion_user_to)
+            friend_request = FriendRequest.objects.create(
+                connexion_user_from=connexion_user_from, connexion_user_to=connexion_user_to)
             friend_request.status = "Sent"
             friend_request.save()
             serializer = FriendRequestSerializer(friend_request)

@@ -56,7 +56,7 @@ class FriendRequestView(ViewSet):
             """approve request"""
             try:
                 connexion_user_to = ConnexionUser.objects.get(user=request.auth.user)
-                friend_request = FriendRequest.objects.get(pk=pk, connexion_user_to=connexion_user_to, status="Sent")
+                friend_request = FriendRequest.objects.get(pk=pk,connexion_user_to=connexion_user_to, status="Sent")
                 friend_request.status= "Approved"
                 friend_request.save()
                 return Response(None, status=status.HTTP_204_NO_CONTENT)
