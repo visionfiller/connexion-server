@@ -3,3 +3,4 @@ from .gender_serializer import GenderSerializer
 from .orientation_serializer import OrientationSerializer
 from .post_serializer import PostSerializer
 from .friend_request_serializer import FriendRequestSerializer
+from .connexion_friend_serializer import ConnexionFriendSerializer

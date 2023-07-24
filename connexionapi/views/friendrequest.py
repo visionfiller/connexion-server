@@ -41,6 +41,16 @@ class FriendRequestView(ViewSet):
         friend_requests = FriendRequest.objects.all()
         serializer = FriendRequestSerializer(friend_requests, many=True)
         return Response(serializer.data)
+    def destroy(self, request,pk):
+        """Handle GET requests to get all properties
+
+        Returns:
+            Response -- JSON serialized list of properties
+        """
+        friend_request= FriendRequest.objects.get(pk=pk)
+        friend_request.delete()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+        
     @action(methods=['GET'], detail=False)
     def myfriendrequests(self, request):
             """Get the current user's friend requests"""
@@ -59,6 +69,9 @@ class FriendRequestView(ViewSet):
                 friend_request = FriendRequest.objects.get(pk=pk,connexion_user_to=connexion_user_to, status="Sent")
                 friend_request.status= "Approved"
                 friend_request.save()
+                connexion_user_from = friend_request.connexion_user_from
+                connexion_user_to.friends.add(connexion_user_from)
+                connexion_user_from.friends.add(connexion_user_to)
                 return Response(None, status=status.HTTP_204_NO_CONTENT)
               
             except FriendRequest.DoesNotExist as ex:
