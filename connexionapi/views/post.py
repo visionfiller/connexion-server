@@ -57,3 +57,27 @@ class PostView(ViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except ValidationError as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request,pk):
+        """Handle GET requests to get all properties
+
+        Returns:
+            Response -- JSON serialized list of properties
+        """
+        try:
+            user= ConnexionUser.objects.get(user=request.auth.user)
+            post= Post.objects.get(pk=pk, connexion_user=user)
+            post.delete()
+            return Response(None, status=status.HTTP_204_NO_CONTENT)
+        except Post.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+    @action(methods=['GET'], detail=False)
+    def myfriendsposts(self, request):
+            """Get the current user's friend requests"""
+            try:
+                user = ConnexionUser.objects.get(user=request.auth.user)
+                posts = Post.objects.filter(connexion_user__in=user.friends.all())
+                serializer = PostSerializer(posts, many=True)
+                return Response(serializer.data)
+            except ConnexionUser.DoesNotExist as ex:
+                return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
